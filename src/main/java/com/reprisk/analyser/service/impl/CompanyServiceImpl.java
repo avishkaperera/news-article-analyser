@@ -25,7 +25,7 @@ import java.util.Map;
 public class CompanyServiceImpl implements CompanyService {
 
     private final FilePathConfig.FilePathProperties filePathProperties;
-    private final Map<CompanyEntity, Object> inMemoryDataStore;
+    private final Map<CompanyEntity, String> inMemoryDataStore;
     private final CsvConfig.CsvProperties csvProperties;
 
     @Override

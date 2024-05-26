@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AppConfig {
 
     @Bean
-    public Map<CompanyEntity, Object> inMemoryDataStore() {
+    public Map<CompanyEntity, String> inMemoryDataStore() {
         return new ConcurrentHashMap<>();
     }
 }

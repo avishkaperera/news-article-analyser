@@ -2,6 +2,7 @@ package com.reprisk.analyser.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
 
 @Data
 @JacksonXmlRootElement(localName = "news-item")
+@AllArgsConstructor
 public class NewsArticle {
 
     @JacksonXmlProperty(isAttribute = true)

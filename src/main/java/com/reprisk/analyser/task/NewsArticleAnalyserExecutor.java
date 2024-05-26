@@ -24,6 +24,9 @@ public class NewsArticleAnalyserExecutor {
     private final NewsArticleService newsArticleService;
     private final ExecutorConfig.ExecutorProperties executorProperties;
 
+    /*
+    This could be improved to be called from an API endpoint, so it can be triggered manually
+     */
     @EventListener(ApplicationReadyEvent.class)
     public void triggerAnalysis() throws IOException {
         log.info("Start analysing at {}", System.currentTimeMillis());

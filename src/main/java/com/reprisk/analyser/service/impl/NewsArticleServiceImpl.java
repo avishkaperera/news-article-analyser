@@ -20,9 +20,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import static com.reprisk.analyser.util.LookupUtil.isCompanyPresentInArticle;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +30,6 @@ import java.util.stream.Stream;
 public class NewsArticleServiceImpl implements NewsArticleService {
 
     public static final String DIRECTORY_SEPARATOR = "/";
-    private static final String COMPANY_NAME_MATCHER_REGEX = ".*(?<!\\w)%s(?!\\w).*";
 
     private final FilePathConfig.FilePathProperties filePathProperties;
     private final XmlMapper xmlMapper;
@@ -82,19 +81,5 @@ public class NewsArticleServiceImpl implements NewsArticleService {
                             .build());
         }
 
-    }
-
-    private boolean isCompanyPresentInArticle(String newsArticleText, String companyName) {
-        if (!newsArticleText.contains(companyName)) {
-            return false;
-        }
-
-        String sanitizedName = companyName.contains("(") ? companyName
-                .replace("(", "\\(")
-                .replace(")", "\\)") : companyName;
-        String formattedRegex = String.format(COMPANY_NAME_MATCHER_REGEX, sanitizedName);
-        Pattern companyNamePattern = Pattern.compile(formattedRegex, Pattern.DOTALL);
-        Matcher companyNameMatcher = companyNamePattern.matcher(newsArticleText);
-        return companyNameMatcher.find();
     }
 }

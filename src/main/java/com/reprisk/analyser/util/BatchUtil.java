@@ -15,6 +15,9 @@ import java.util.stream.StreamSupport;
 @UtilityClass
 public class BatchUtil {
 
+    /*
+    This method basically partitions the list into given batch size so it can be processed parellelly.
+     */
     public static <T> Stream<List<T>> stream(int batchSize, Iterator<T> iterator) {
         return StreamSupport.stream(
                 Spliterators.spliteratorUnknownSize(

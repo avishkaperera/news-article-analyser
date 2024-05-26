@@ -1,0 +1,18 @@
+# IDEA
+.idea/
+
+**/target/
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+## Java
+# either the 3rd party diff or IDEA:
+*.java.orig
+*.jar.original
+
+# Package Files
+*.war
+*.jar

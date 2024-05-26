@@ -11,6 +11,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
@@ -24,7 +25,7 @@ public class NewsArticleAnalyserExecutor {
     private final ExecutorConfig.ExecutorProperties executorProperties;
 
     @EventListener(ApplicationReadyEvent.class)
-    public void triggerAnalysis() {
+    public void triggerAnalysis() throws IOException {
         log.info("Start analysing at {}", System.currentTimeMillis());
         List<Company> companies = companyService.loadCompanies();
         List<String> newsArticleNames = newsArticleService.listNewsArticleNames();
@@ -33,7 +34,7 @@ public class NewsArticleAnalyserExecutor {
             forkJoinPool.submit(() ->
                     BatchUtil.stream(executorProperties.batchSize(), newsArticleNames.iterator())
                             .parallel()
-                            .forEach(articleNames -> newsArticleService.readFromXmls(articleNames)
+                            .forEach(articleNames -> newsArticleService.readFromXml(articleNames)
                                     .thenAcceptAsync(articles -> newsArticleService.startParse(companies, articles))));
         }
     }

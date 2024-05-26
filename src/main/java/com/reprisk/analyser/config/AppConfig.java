@@ -1,6 +1,6 @@
 package com.reprisk.analyser.config;
 
-import com.reprisk.analyser.persistence.CompanyEntity;
+import com.reprisk.analyser.model.CompanyEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

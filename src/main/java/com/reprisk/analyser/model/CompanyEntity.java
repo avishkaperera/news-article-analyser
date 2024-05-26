@@ -1,4 +1,4 @@
-package com.reprisk.analyser.persistence;
+package com.reprisk.analyser.model;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

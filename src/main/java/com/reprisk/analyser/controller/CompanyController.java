@@ -1,6 +1,6 @@
 package com.reprisk.analyser.controller;
 
-import com.reprisk.analyser.persistence.CompanyEntity;
+import com.reprisk.analyser.model.CompanyEntity;
 import com.reprisk.analyser.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

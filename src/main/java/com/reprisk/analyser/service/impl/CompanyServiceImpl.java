@@ -3,8 +3,8 @@ package com.reprisk.analyser.service.impl;
 import com.reprisk.analyser.config.CsvConfig;
 import com.reprisk.analyser.config.FilePathConfig;
 import com.reprisk.analyser.model.Company;
+import com.reprisk.analyser.model.CompanyEntity;
 import com.reprisk.analyser.model.CompanyFoundEvent;
-import com.reprisk.analyser.persistence.CompanyEntity;
 import com.reprisk.analyser.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final CsvConfig.CsvProperties csvProperties;
 
     @Override
-    public List<Company> loadCompanies() {
+    public List<Company> loadCompanies() throws IOException {
         log.info("Loading companies...");
         try (final BufferedReader csvReader = Files.newBufferedReader(Paths.get(filePathProperties.companyListCsvFile()))) {
             return csvReader
@@ -41,8 +41,6 @@ public class CompanyServiceImpl implements CompanyService {
                         return new Company(Integer.valueOf(idNamePair[0]), idNamePair[1]);
                     })
                     .toList();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

@@ -30,27 +30,26 @@ import java.util.stream.Stream;
 public class NewsArticleServiceImpl implements NewsArticleService {
 
     public static final String DIRECTORY_SEPARATOR = "/";
+    private static final String COMPANY_NAME_MATCHER_REGEX = ".*(?<!\\w)%s(?!\\w).*";
+
     private final FilePathConfig.FilePathProperties filePathProperties;
     private final XmlMapper xmlMapper;
-    private static final String COMPANY_NAME_MATCHER_REGEX = ".*(?<!\\w)%s(?!\\w).*";
     private final ApplicationEventPublisher publisher;
 
     @Override
-    public List<String> listNewsArticleNames() {
+    public List<String> listNewsArticleNames() throws IOException {
         log.info("Loading news article names...");
         try (final Stream<Path> newsArticleFileNames = Files.list(Paths.get(filePathProperties.articleListDir()))) {
             return newsArticleFileNames
                     .filter(file -> !Files.isDirectory(file))
                     .map(file -> file.getFileName().toString())
                     .toList();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public CompletableFuture<List<NewsArticle>> readFromXmls(List<String> newsArticleName) {
-        return CompletableFuture.completedFuture(newsArticleName.stream().map(article -> {
+    public CompletableFuture<List<NewsArticle>> readFromXml(List<String> newsArticleNames) {
+        return CompletableFuture.completedFuture(newsArticleNames.stream().map(article -> {
             try {
                 return xmlMapper.readValue(
                         new File(filePathProperties.articleListDir() + DIRECTORY_SEPARATOR + article),
@@ -64,8 +63,8 @@ public class NewsArticleServiceImpl implements NewsArticleService {
 
     @Override
     @Async
-    public CompletableFuture<Void> startParse(List<Company> companies, List<NewsArticle> newsArticle) {
-        for (NewsArticle article : newsArticle) {
+    public CompletableFuture<Void> startParse(List<Company> companies, List<NewsArticle> newsArticles) {
+        for (NewsArticle article : newsArticles) {
             for (Company company : companies) {
                 analyseNewsArticleText(article, company);
             }

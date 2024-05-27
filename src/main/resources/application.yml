@@ -7,7 +7,7 @@ analyser:
       company-list-csv-file: "/Users/avishkaperera/reprisk/160408_company_list.csv"
       article-list-dir: "/Users/avishkaperera/reprisk/data"
     init:
-      batch-size: 10
+      batch-size: 2000
       core-thread-pool-size: 4
     csv:
       delimiter: ";"
